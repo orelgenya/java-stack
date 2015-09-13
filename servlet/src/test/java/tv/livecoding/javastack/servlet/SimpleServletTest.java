@@ -1,9 +1,6 @@
 package tv.livecoding.javastack.servlet;
 
-import com.gargoylesoftware.htmlunit.HttpMethod;
-import com.gargoylesoftware.htmlunit.TextPage;
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.WebRequest;
+import com.gargoylesoftware.htmlunit.*;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -43,14 +40,14 @@ public class SimpleServletTest {
 
     @Test
     public void testGet() throws IOException {
-        TextPage page = webClient.getPage(base + "SimpleServlet");
-        assertEquals("my get", page.getContent());
+        TextPage page = webClient.getPage(base + "s");
+        assertEquals("cheking", page.getContent());
     }
 
     @Test
     public void testPost() throws IOException {
-        WebRequest request = new WebRequest(new URL(base + "SimpleServlet"), HttpMethod.POST);
-        TextPage page = webClient.getPage(request);
-        assertEquals("my post", page.getContent());
+        WebRequest request = new WebRequest(new URL(base + "s"), HttpMethod.POST);
+        Page page = webClient.getPage(request);
+        assertEquals("мой post", page.getWebResponse().getContentAsString("UTF-8"));
     }
 }
