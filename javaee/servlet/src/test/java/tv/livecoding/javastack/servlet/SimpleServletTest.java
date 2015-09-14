@@ -1,6 +1,7 @@
 package tv.livecoding.javastack.servlet;
 
 import com.gargoylesoftware.htmlunit.*;
+import com.gargoylesoftware.htmlunit.util.NameValuePair;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -42,7 +43,16 @@ public class SimpleServletTest {
     @Test
     public void testGet() throws IOException {
         Page page = webClient.getPage(base + "s");
+        WebResponse webResponse = page.getWebResponse();
         assertEquals(SimpleServlet.INITIAL_PARAM_VALUE, page.getWebResponse().getContentAsString(EncodingFilter.UTF8));
+
+        String cookie = null;
+        for (NameValuePair pair : webResponse.getResponseHeaders()) {
+            if (pair.getName().equals("Set-Cookie")) {
+                cookie = pair.getValue();
+            }
+        }
+        assertEquals("Cookie name is wrong!", SimpleServlet.COOKIE_NAME + "=" + SimpleServlet.COOKIE_VALUE + "; HttpOnly", cookie);
     }
 
     @Test
