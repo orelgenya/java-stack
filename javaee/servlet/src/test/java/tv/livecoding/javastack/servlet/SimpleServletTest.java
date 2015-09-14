@@ -30,7 +30,12 @@ public class SimpleServletTest {
 
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
-        WebArchive war = ShrinkWrap.create(WebArchive.class).addClasses(SimpleServlet.class, EncodingFilter.class);
+        WebArchive war = ShrinkWrap.create(WebArchive.class)
+                .addClasses(
+                        SimpleServlet.class,
+                        EncodingFilter.class,
+                        SimpleListener.class,
+                        MyDynamicServlet.class);
         System.out.println(war.toString(true));
         return war;
     }

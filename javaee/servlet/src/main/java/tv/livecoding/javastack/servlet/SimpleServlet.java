@@ -1,6 +1,7 @@
 package tv.livecoding.javastack.servlet;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
 import javax.servlet.UnavailableException;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +25,7 @@ public class SimpleServlet extends HttpServlet {
     public static final String COOKIE_NAME = "cookie";
     public static final String COOKIE_VALUE = "css-secure";
     public static final int PAUSE_SECONDS = 3;
+    private volatile boolean dynamic = false;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
