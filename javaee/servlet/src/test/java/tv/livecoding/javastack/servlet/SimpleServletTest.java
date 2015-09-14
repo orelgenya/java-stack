@@ -28,7 +28,7 @@ public class SimpleServletTest {
 
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
-        WebArchive war = ShrinkWrap.create(WebArchive.class).addClass(SimpleServlet.class);
+        WebArchive war = ShrinkWrap.create(WebArchive.class).addClasses(SimpleServlet.class, EncodingFilter.class);
         System.out.println(war.toString(true));
         return war;
     }
@@ -40,8 +40,8 @@ public class SimpleServletTest {
 
     @Test
     public void testGet() throws IOException {
-        TextPage page = webClient.getPage(base + "s");
-        assertEquals("cheking", page.getContent());
+        Page page = webClient.getPage(base + "s");
+        assertEquals("initial параметр", page.getWebResponse().getContentAsString("UTF-8"));
     }
 
     @Test

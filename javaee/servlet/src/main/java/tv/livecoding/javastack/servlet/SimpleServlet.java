@@ -13,7 +13,7 @@ import java.io.IOException;
  */
 @WebServlet(value = {"/SimpleServlet", "/s"},
         initParams = {
-                @WebInitParam(name = "type", value = "cheking")
+                @WebInitParam(name = "type", value = "initial параметр")
         })
 public class SimpleServlet extends HttpServlet {
     @Override
@@ -23,7 +23,6 @@ public class SimpleServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setCharacterEncoding("UTF-8");
         resp.getWriter().print("мой post");
     }
 }
