@@ -9,7 +9,6 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.internal.runners.statements.Fail;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
@@ -34,8 +33,8 @@ public class SimpleServletTest {
                 .addClasses(
                         SimpleServlet.class,
                         EncodingFilter.class,
-                        SimpleListener.class,
-                        MyDynamicServlet.class);
+                        SimpleServletRequestListener.class,
+                        DynamicServlet.class);
         System.out.println(war.toString(true));
         return war;
     }

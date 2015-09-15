@@ -1,6 +1,9 @@
 package tv.livecoding.javastack.servlet;
 
-import com.gargoylesoftware.htmlunit.*;
+import com.gargoylesoftware.htmlunit.HttpMethod;
+import com.gargoylesoftware.htmlunit.Page;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.WebRequest;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -9,14 +12,11 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import tv.livecoding.javastack.servlet.samples.*;
 
 import java.io.IOException;
 import java.net.URL;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 /**
  * Created by OrelGenya on 14.09.2015.
@@ -34,9 +34,9 @@ public class DynamicServletTest {
     public static WebArchive createDeployment() {
         WebArchive war = ShrinkWrap.create(WebArchive.class)
                 .addClasses(
-                        tv.livecoding.javastack.servlet.samples.ParentServlet.class,
-//                        EncodingFilter.class,
-                        ChildServlet.class);
+                        SimpleServletContextListener.class,
+                        SimpleServletRequestListener.class,
+                        DynamicServlet.class);
         System.out.println(war.toString(true));
         return war;
     }
@@ -48,23 +48,8 @@ public class DynamicServletTest {
 
     @Test
     public void testDynamic() throws IOException {
-        WebRequest request = new WebRequest(new URL(base + "parent"), HttpMethod.GET);
+        WebRequest request = new WebRequest(new URL(base + "dynamic"), HttpMethod.GET);
         Page page = webClient.getPage(request);
-        assertEquals(page.getWebResponse().getStatusCode(), 200);
-//        assertEquals(SimpleServlet.POST_RESPONSE, page.getWebResponse().getContentAsString(EncodingFilter.UTF8));
-
-        request = new WebRequest(new URL(base + "ChildServlet"), HttpMethod.GET);
-        page = webClient.getPage(request);
-        assertEquals("I'm dynamic!", page.getWebResponse().getContentAsString(EncodingFilter.UTF8));
-//        try {
-//            webClient.getPage(base + "/ChildServlet");
-//        } catch (FailingHttpStatusCodeException e) {
-//            assertNotNull(e);
-//            assertEquals(404, e.getStatusCode());
-//            return;
-//        }
-//        fail("/ChildServlet could be accessed with programmatic registration");
-//        webClient.getPage(base + "/ParentServlet");
-//        webClient.getPage(base + "/ChildServlet");
+        assertEquals(DynamicServlet.RESPONSE, page.getWebResponse().getContentAsString(EncodingFilter.UTF8));
     }
 }
