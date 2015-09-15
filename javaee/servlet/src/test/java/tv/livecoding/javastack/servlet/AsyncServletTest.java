@@ -19,11 +19,10 @@ import java.net.URL;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by OrelGenya on 14.09.2015.
+ * Created by Eugene Orel on 9/15/2015.
  */
 @RunWith(Arquillian.class)
-public class DynamicServletTest {
-
+public class AsyncServletTest {
 
     @ArquillianResource
     private URL base;
@@ -32,12 +31,9 @@ public class DynamicServletTest {
 
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
-        WebArchive war = ShrinkWrap.create(WebArchive.class)
-                .addClasses(
-                        SimpleServletContextListener.class,
-                        SimpleServletRequestListener2.class,
-                        DynamicServlet.class);
-        System.out.println(war.toString(true));
+        WebArchive war = ShrinkWrap.create(WebArchive.class).addClasses(
+                AsyncServlet.class, SimpleServletRequestListener2.class);
+        System.out.println(war);
         return war;
     }
 
@@ -47,9 +43,9 @@ public class DynamicServletTest {
     }
 
     @Test
-    public void testDynamic() throws IOException {
-        WebRequest request = new WebRequest(new URL(base + "dynamic"), HttpMethod.GET);
+    public void test() throws IOException {
+        WebRequest request = new WebRequest(new URL(base + "async"), HttpMethod.GET);
         Page page = webClient.getPage(request);
-        assertEquals(DynamicServlet.RESPONSE, page.getWebResponse().getContentAsString(EncodingFilter.UTF8));
+        assertEquals(AsyncServlet.RESPONSE, page.getWebResponse().getContentAsString(EncodingFilter.UTF8));
     }
 }

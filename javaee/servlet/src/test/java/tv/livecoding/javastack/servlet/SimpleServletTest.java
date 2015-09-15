@@ -33,7 +33,7 @@ public class SimpleServletTest {
                 .addClasses(
                         SimpleServlet.class,
                         EncodingFilter.class,
-                        SimpleServletRequestListener.class,
+                        SimpleServletRequestListener2.class,
                         DynamicServlet.class);
         System.out.println(war.toString(true));
         return war;
