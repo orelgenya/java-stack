@@ -17,6 +17,8 @@
         <module>../../servlet/programmatic-registration</module>
         <module>programmatic-servlet</module>
         <module>simple-filters</module>
+        <module>dispatching-requests</module>
+        <module>async-servlet</module>
     </modules>
 
     <build>
