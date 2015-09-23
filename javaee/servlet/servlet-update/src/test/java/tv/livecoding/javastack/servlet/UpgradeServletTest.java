@@ -38,11 +38,7 @@ public class UpgradeServletTest {
     }
 
     @Test
-//    @Ignore
     public void testUpgrade() throws IOException {
-//        System.out.println(base.getHost());
-//        System.out.println(base.getPath());
-//        System.out.println(base);
         Socket socket = new Socket(base.getHost(), base.getPort());
         try (InputStream is = socket.getInputStream();
              OutputStream os = socket.getOutputStream()) {
@@ -68,7 +64,7 @@ public class UpgradeServletTest {
         StringBuilder sb = new StringBuilder();
         byte[] bb = new byte[256];
         int len;
-        while(!sb.toString().endsWith("\r\n\r\n") && (len = is.read(bb)) != -1) { //!sb.toString().endsWith("\r\n\r\n") &&
+        while(!sb.toString().endsWith("\r\n\r\n") && (len = is.read(bb)) != -1) {
             sb.append(new String(bb, 0, len));
         }
         return sb.toString();
