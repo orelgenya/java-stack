@@ -1,7 +1,5 @@
 package tv.livecoding.javastack.servlet.compression;
 
-import tv.livecoding.javastack.servlet.compression.GZIPRequestWrapper;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -28,14 +26,18 @@ public class GZIPFilter implements Filter {
         String contentEncoding = httpReq.getHeader("content-encoding");
         String acceptEncoding = httpReq.getHeader("accept-encoding");
 
-        if (contentEncoding != null && contentEncoding.toLowerCase().equals("gzip")) {
+        if (contentEncoding != null && contentEncoding.toLowerCase().indexOf("gzip") != -1) {
             request = new GZIPRequestWrapper(httpReq);
         }
 
-        if (acceptEncoding != null && acceptEncoding.toLowerCase().equals("gzip")) {
+        if (acceptEncoding != null && acceptEncoding.toLowerCase().indexOf("gzip") != -1) {
             response = new GZIPResponseWrapper(httpResp);
         }
 
         chain.doFilter(request, response);
+
+        if (response instanceof GZIPResponseWrapper) {
+            ((GZIPResponseWrapper) response).finish();
+        }
     }
 }

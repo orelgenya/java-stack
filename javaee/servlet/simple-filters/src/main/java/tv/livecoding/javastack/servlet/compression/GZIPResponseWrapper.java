@@ -131,4 +131,14 @@ public class GZIPResponseWrapper extends HttpServletResponseWrapper {
             return response.getOutputStream();
         }
     }
+
+    public void finish() throws IOException {
+        if (grs == null) {
+            return;
+        }
+        if (writer != null) {
+            writer.flush();
+        }
+        grs.finish();
+    }
 }

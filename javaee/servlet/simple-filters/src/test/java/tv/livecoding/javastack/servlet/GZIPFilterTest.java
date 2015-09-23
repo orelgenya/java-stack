@@ -1,6 +1,9 @@
 package tv.livecoding.javastack.servlet;
 
-import com.gargoylesoftware.htmlunit.*;
+import com.gargoylesoftware.htmlunit.HttpMethod;
+import com.gargoylesoftware.htmlunit.Page;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.WebRequest;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -12,9 +15,7 @@ import org.junit.runner.RunWith;
 import tv.livecoding.javastack.servlet.compression.*;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.util.zip.GZIPInputStream;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 public class GZIPFilterTest {
 
     @ArquillianResource
-    private java.net.URL base;
+    private URL base;
 
     WebClient webClient;
     String URL;
@@ -58,24 +59,7 @@ public class GZIPFilterTest {
 
         request = new WebRequest(new URL(URL), HttpMethod.GET);
         request.setAdditionalHeader("Accept-Encoding", "gzip");
-        WebResponse response = webClient.getWebConnection().getResponse(request);
-
-
-        assertEquals("hello!json", readGZIP(response.getContentAsStream()));
-    }
-
-    private String readGZIP (InputStream is) throws IOException {
-        byte[] bb = new byte[256];
-        int len;
-        StringBuilder sb = new StringBuilder();
-        try (GZIPInputStream gis = new GZIPInputStream(is)) {
-            while ((len = gis.read(bb)) > 0) {
-                sb.append(new String(bb, 0, len));
-            }
-        } catch (IOException ex) {
-            System.out.println(sb.toString());
-            throw ex;
-        }
-        return sb.toString();
+        page = webClient.getPage(request);
+        assertEquals("hello!", page.getWebResponse().getContentAsString());
     }
 }
