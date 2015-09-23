@@ -19,6 +19,7 @@
         <module>simple-filters</module>
         <module>dispatching-requests</module>
         <module>async-servlet</module>
+        <module>servlet-update</module>
     </modules>
 
     <build>
