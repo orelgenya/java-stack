@@ -1,9 +1,8 @@
 package tv.livecoding.javastack.servlet;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.ServletRegistration;
+import javax.servlet.*;
 import javax.servlet.annotation.WebListener;
+import java.util.EnumSet;
 
 /**
  * Created by Eugene Orel on 9/15/2015.
@@ -14,8 +13,13 @@ public class SimpleServletContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         System.out.println("Servlet context initialized: " + sce.getServletContext().getContextPath());
-        ServletRegistration.Dynamic registration = sce.getServletContext().addServlet("dynamic", DynamicServlet.class);
-        registration.addMapping("/dynamic");
+        ServletRegistration.Dynamic sreg = sce.getServletContext().addServlet("servlet", DynamicServlet.class);
+        sreg.addMapping("/dynamic");
+
+        FilterRegistration.Dynamic freg = sce.getServletContext().addFilter("filter", DynamicFilter.class);
+        freg.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), false, "/dynamic");
+
+        sce.getServletContext().addListener(DynamicListener.class);
     }
 
     @Override

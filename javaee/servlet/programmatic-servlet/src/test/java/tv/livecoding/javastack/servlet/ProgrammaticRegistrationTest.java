@@ -35,7 +35,9 @@ public class ProgrammaticRegistrationTest {
         WebArchive war = ShrinkWrap.create(WebArchive.class)
                 .addClasses(
                         SimpleServletContextListener.class,
-                        DynamicServlet.class);
+                        DynamicServlet.class,
+                        DynamicFilter.class,
+                        DynamicListener.class);
         System.out.println(war.toString(true));
         return war;
     }
@@ -49,6 +51,6 @@ public class ProgrammaticRegistrationTest {
     public void testDynamic() throws IOException {
         WebRequest request = new WebRequest(new URL(base + "dynamic"), HttpMethod.GET);
         Page page = webClient.getPage(request);
-        assertEquals(DynamicServlet.RESPONSE, page.getWebResponse().getContentAsString());
+        assertEquals(DynamicServlet.RESPONSE, page.getWebResponse().getContentAsString(DynamicFilter.UTF8));
     }
 }
