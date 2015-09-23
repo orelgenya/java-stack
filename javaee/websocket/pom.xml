@@ -9,17 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>servlet</artifactId>
+    <artifactId>websocket</artifactId>
     <packaging>pom</packaging>
-    <modules>
-        <module>simple-servlet</module>
-        <module>servlet-lifecycle</module>
-        <module>programmatic-servlet</module>
-        <module>simple-filters</module>
-        <module>dispatching-requests</module>
-        <module>async-servlet</module>
-        <module>servlet-update</module>
-    </modules>
 
     <build>
         <testResources>
@@ -28,5 +19,8 @@
             </testResource>
         </testResources>
     </build>
+    <modules>
+        <module>simple-websocket</module>
+    </modules>
 
 </project>
