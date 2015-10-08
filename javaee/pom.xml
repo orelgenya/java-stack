@@ -17,6 +17,7 @@
         <module>servlet</module>
         <module>websocket</module>
         <module>ejb</module>
+        <module>cdi</module>
     </modules>
 
     <properties>
