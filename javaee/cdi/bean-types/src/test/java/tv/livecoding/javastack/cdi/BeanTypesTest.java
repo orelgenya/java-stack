@@ -29,7 +29,11 @@ public class BeanTypesTest {
                         SimpleBean.class,
                         StatefulBean.class,
                         Echo.class,
-                        Fireable.class
+                        Fireable.class,
+                        GenericBean.class,
+                        Generic.class,
+                        TypedBean.class,
+                        SpecializingBean.class
                 ).addAsManifestResource("beans.xml");
         System.out.println(arch.toString(true));
         return arch;
@@ -58,20 +62,44 @@ public class BeanTypesTest {
 //    @Inject @Named("stateful")
 //    Echo statefulEcho;
 
+    @Inject @Generic
+    Fireable genericFireable;
+
+    @Inject @Generic
+    GenericBean<Integer> genericBean;
+
+//    impossible inject typed bean with unspecified type
+//    @Inject @Named("typed")
+//    Fireable typedFireable;
+
+    @Inject
+    TypedBean typedBean;
+
     @Test
     public void test() {
         System.out.println(bean);
         System.out.println(echo);
+        System.out.println(genericBean);
+        System.out.println(typedBean);
+
         System.out.println(simpleEcho);
         System.out.println(simpleFireable);
         System.out.println(statefulFireable);
+        System.out.println(genericFireable);
+
         assertEquals("hi", bean.fire("hi"));
         assertEquals("hi", echo.echo("hi"));
+        assertEquals("123", genericBean.gen(123));
+        assertEquals("hi", typedBean.fire("hi"));
+
         assertEquals("hi", simpleEcho.echo("hi"));
         assertEquals("hi", simpleFireable.fire("hi"));
         assertEquals("hi", statefulFireable.fire("hi"));
+        assertEquals("hi", genericFireable.fire("hi"));
+
         assertNotEquals(bean, echo);
         assertNotEquals(echo, simpleEcho);
         assertNotEquals(simpleFireable, statefulFireable);
+        assertNotEquals(simpleFireable, genericFireable);
     }
 }

@@ -12,6 +12,7 @@
     <modules>
         <module>javaee</module>
         <module>javase</module>
+        <module>android</module>
     </modules>
 
     <properties>
