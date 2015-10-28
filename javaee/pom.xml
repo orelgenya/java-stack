@@ -18,6 +18,7 @@
         <module>websocket</module>
         <module>ejb</module>
         <module>cdi</module>
+        <module>jaxrs</module>
     </modules>
 
     <properties>
