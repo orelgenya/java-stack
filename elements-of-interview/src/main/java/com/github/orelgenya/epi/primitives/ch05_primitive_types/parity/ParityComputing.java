@@ -1,4 +1,4 @@
-package com.github.orelgenya.epi.primitives;
+package com.github.orelgenya.epi.primitives.ch05_primitive_types.parity;
 
 public class ParityComputing {
     public static Result parity(long input) {

@@ -1,6 +1,6 @@
-package com.github.orelgenya.epi.primitives;
+package com.github.orelgenya.epi.primitives.ch05_primitive_types.parity;
 
-import com.github.orelgenya.epi.primitives.ParityComputing.Result;
+import com.github.orelgenya.epi.primitives.ch05_primitive_types.parity.ParityComputing.Result;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
